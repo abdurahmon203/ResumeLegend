@@ -80,8 +80,10 @@ export default function LoginPage() {
 
   const handleGitHubLogin = () => {
     setLoading(true);
-    // Try to redirect to backend oauth, or fall back to mock callback redirect
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const rawUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const backendUrl = rawUrl.includes('localhost:8000') 
+      ? rawUrl 
+      : (rawUrl.endsWith('/api') ? rawUrl : `${rawUrl}/api`);
     
     // Check if backend is alive (async fire-and-forget style for routing)
     fetch(`${backendUrl}/auth/github`, { method: 'HEAD', mode: 'no-cors' })

@@ -94,8 +94,10 @@ export default function SignupPage() {
   }, []);
 
   const handleGitHubLogin = () => {
-    setLoading(true);
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const rawUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const backendUrl = rawUrl.includes('localhost:8000') 
+      ? rawUrl 
+      : (rawUrl.endsWith('/api') ? rawUrl : `${rawUrl}/api`);
     
     // Check if backend is alive
     fetch(`${backendUrl}/auth/github`, { method: 'HEAD', mode: 'no-cors' })

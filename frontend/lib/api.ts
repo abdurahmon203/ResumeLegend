@@ -126,7 +126,10 @@ export interface AIReviewResponse {
   recommendations: AIReviewRecommendation[];
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE_URL = rawApiUrl.includes('localhost:8000') 
+  ? rawApiUrl 
+  : (rawApiUrl.endsWith('/api') ? rawApiUrl : `${rawApiUrl}/api`);
 
 // Helper to get JWT headers
 const getHeaders = () => {
