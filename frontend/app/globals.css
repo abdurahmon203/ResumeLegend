@@ -1,0 +1,396 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0A0C10;
+  --foreground: #F3F4F6;
+  --card: #11131A;
+  --card-foreground: #F3F4F6;
+  --popover: #11131A;
+  --popover-foreground: #F3F4F6;
+  --primary: #A855F7;
+  --primary-foreground: #FFFFFF;
+  --secondary: #3B82F6;
+  --secondary-foreground: #FFFFFF;
+  --muted: #1F293D;
+  --muted-foreground: #9CA3AF;
+  --accent: #3B82F6;
+  --accent-foreground: #FFFFFF;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: #1F293D;
+  --input: #1F293D;
+  --ring: #A855F7;
+  
+  --success: #10B981;
+}
+
+/* Light Mode Token Overrides */
+html.light, [data-theme="light"], body.light {
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+  --card: #FFFFFF;
+  --card-foreground: #0F172A;
+  --popover: #FFFFFF;
+  --popover-foreground: #0F172A;
+  --primary: #9333EA;
+  --primary-foreground: #FFFFFF;
+  --secondary: #2563EB;
+  --secondary-foreground: #FFFFFF;
+  --muted: #E2E8F0;
+  --muted-foreground: #475569;
+  --border: #E2E8F0;
+  --input: #E2E8F0;
+  --ring: #9333EA;
+  --success: #059669;
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  
+  --color-success: var(--success);
+  
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ==================================================== */
+/* HIGH-CONTRAST, STUNNING LIGHT MODE OVERRIDES         */
+/* ==================================================== */
+html.light body {
+  background-color: #F8FAFC !important;
+  color: #0F172A !important;
+}
+
+/* Page background */
+html.light .bg-\[\#0A0C10\] {
+  background-color: #F8FAFC !important;
+}
+
+html.light .bg-\[\#0A0C10\]\/95, 
+html.light .bg-\[\#0A0C10\]\/90, 
+html.light .bg-\[\#0A0C10\]\/80 {
+  background-color: rgba(248, 250, 252, 0.95) !important;
+}
+
+/* Main Cards */
+html.light .bg-\[\#11131A\] {
+  background-color: #FFFFFF !important;
+  border-color: #E2E8F0 !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.02) !important;
+}
+
+/* Sidebar Strip in CV Editor and Side Panels */
+html.light .bg-\[\#0E1017\],
+html.light .bg-\[\#0D0E15\],
+html.light .bg-\[\#08090D\],
+html.light .bg-\[\#12141D\] {
+  background-color: #FFFFFF !important;
+  border-color: #E2E8F0 !important;
+}
+
+/* Vertical section text and icons in editor sidebar */
+html.light .bg-\[\#0E1017\] .vertical-text,
+html.light .bg-\[\#0D0E15\] .vertical-text {
+  color: #64748B !important;
+}
+
+html.light .bg-\[\#0E1017\] button,
+html.light .bg-\[\#0D0E15\] button {
+  color: #475569 !important;
+}
+
+html.light .bg-\[\#0E1017\] button:hover,
+html.light .bg-\[\#0D0E15\] button:hover {
+  color: #0F172A !important;
+  background-color: #F1F5F9 !important;
+}
+
+html.light .bg-\[\#0E1017\] button.bg-\[\#A855F7\],
+html.light .bg-\[\#0D0E15\] button.bg-\[\#A855F7\] {
+  background-color: #9333EA !important;
+  color: #FFFFFF !important;
+}
+
+/* Inner unselected cards inside main section card */
+html.light .bg-\[\#11131A\] .bg-\[\#0A0C10\] {
+  background-color: #FFFFFF !important;
+  border-color: #E2E8F0 !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+}
+
+html.light .bg-\[\#11131A\] .bg-\[\#0A0C10\]:hover {
+  border-color: #CBD5E1 !important;
+  background-color: #F8FAFC !important;
+}
+
+/* Selected Repo & Option Cards */
+html.light [class*="bg-purple-950"],
+html.light [class*="bg-[#A855F7]/10"] {
+  background-color: #F3E8FF !important;
+  border-color: #C084FC !important;
+}
+
+/* Selected item text inside purple cards */
+html.light [class*="bg-purple-950"] .text-white,
+html.light [class*="bg-[#A855F7]/10"] .text-white {
+  color: #581C87 !important;
+}
+
+/* Buttons like Sync, Actions, Controls */
+html.light button.bg-\[\#1F293D\],
+html.light .bg-\[\#1F293D\] {
+  background-color: #F1F5F9 !important;
+  color: #0F172A !important;
+  border-color: #CBD5E1 !important;
+}
+
+html.light button.bg-\[\#1F293D\]:hover,
+html.light .bg-\[\#1F293D\]:hover {
+  background-color: #E2E8F0 !important;
+  color: #0F172A !important;
+}
+
+/* Tech / Language Pill Badges */
+html.light .bg-gray-900,
+html.light .bg-gray-800,
+html.light .bg-black {
+  background-color: #E2E8F0 !important;
+  color: #1E293B !important;
+  border-color: #CBD5E1 !important;
+}
+
+/* Star badges */
+html.light [class*="bg-blue-950"] {
+  background-color: #EFF6FF !important;
+  border-color: #BFDBFE !important;
+  color: #1D4ED8 !important;
+}
+
+/* Inner preview containers & code boxes */
+html.light .bg-\[\#161B26\], 
+html.light .bg-\[\#11141F\] {
+  background-color: #F1F5F9 !important;
+  border-color: #CBD5E1 !important;
+}
+
+html.light .bg-\[\#1F293D\]\/50, 
+html.light .bg-\[\#1F293D\]\/40 {
+  background-color: rgba(226, 232, 240, 0.6) !important;
+}
+
+/* Borders */
+html.light .border-\[\#1F293D\], 
+html.light .border-\[\#1F293D\]\/50 {
+  border-color: #E2E8F0 !important;
+}
+
+html.light .border-gray-800, 
+html.light .border-gray-700 {
+  border-color: #CBD5E1 !important;
+}
+
+/* High contrast typography for Headings & Text */
+html.light .text-white {
+  color: #0F172A !important;
+}
+
+html.light .text-gray-100 {
+  color: #1E293B !important;
+}
+
+html.light .text-gray-200 {
+  color: #334155 !important;
+}
+
+html.light .text-gray-300 {
+  color: #334155 !important;
+}
+
+html.light .text-gray-400, 
+html.light [class*="text-[#9CA3AF]"] {
+  color: #475569 !important;
+}
+
+html.light .text-gray-500 {
+  color: #64748B !important;
+}
+
+/* Accent texts stay vibrant */
+html.light .text-\[\#A855F7\],
+html.light .text-purple-400 {
+  color: #9333EA !important;
+}
+
+html.light .text-\[\#3B82F6\],
+html.light .text-blue-400 {
+  color: #2563EB !important;
+}
+
+html.light .text-emerald-400,
+html.light .text-green-400 {
+  color: #059669 !important;
+}
+
+/* Status Badges */
+html.light [class*="bg-emerald-950"] {
+  background-color: #ECFDF5 !important;
+  border-color: #A7F3D0 !important;
+}
+html.light [class*="bg-amber-950"] {
+  background-color: #FFFBEB !important;
+  border-color: #FDE68A !important;
+}
+html.light [class*="bg-red-950"] {
+  background-color: #FEF2F2 !important;
+  border-color: #FECACA !important;
+}
+
+/* Inputs, Textareas, Selects */
+html.light input, 
+html.light textarea, 
+html.light select {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  border-color: #CBD5E1 !important;
+}
+
+html.light input::placeholder, 
+html.light textarea::placeholder {
+  color: #94A3B8 !important;
+}
+
+/* Cyber grid background in light mode */
+html.light .cyber-grid {
+  background-image: 
+    linear-gradient(to right, rgba(203, 213, 225, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(203, 213, 225, 0.4) 1px, transparent 1px) !important;
+}
+
+/* Header & Sidebar in light mode */
+html.light header, 
+html.light aside {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-color: #E2E8F0 !important;
+}
+
+/* Light mode custom scrollbars */
+html.light ::-webkit-scrollbar-track {
+  background: #F1F5F9 !important;
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: #CBD5E1 !important;
+  border-radius: 4px !important;
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #9333EA !important;
+}
+
+/* Cyber grid background decoration */
+.cyber-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(31, 41, 61, 0.2) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(31, 41, 61, 0.2) 1px, transparent 1px);
+}
+
+.glow-purple {
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
+}
+
+.glow-blue {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+}
+
+.glow-green {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+}
+
+/* Custom animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s infinite;
+}
+
+/* PDF print styling */
+@media print {
+  body, html {
+    background: white !important;
+    color: black !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-content {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: white !important;
+    overflow: visible !important;
+  }
+  #resume-pdf-canvas {
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+  .print-page-break {
+    page-break-after: always;
+  }
+}

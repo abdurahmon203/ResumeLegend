@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResumeLegend Startup Presentation</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-primary: #0A0C10;
+      --bg-secondary: #11131A;
+      --border-color: #1F293D;
+      --accent-color: #A855F7;
+      --accent-hover: #9333EA;
+      --text-main: #F3F4F6;
+      --text-muted: #9CA3AF;
+      --success: #10B981;
+      --danger: #EF4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* Presentation Wrapper */
+    .presentation-container {
+      position: relative;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Slide Container */
+    .slide-wrapper {
+      flex-grow: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+      transform: scale(0.98);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 3rem 2.5rem;
+      overflow-y: auto;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* Custom Sleek Scrollbar for Slides */
+    .slide::-webkit-scrollbar {
+      width: 6px;
+    }
+    .slide::-webkit-scrollbar-track {
+      background: var(--bg-primary);
+    }
+    .slide::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 999px;
+    }
+    .slide::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-color);
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    /* Fade-in overlay for slides with bg images */
+    .slide-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(10, 12, 16, 0.95) 40%, rgba(10, 12, 16, 0.7) 100%);
+      z-index: 1;
+    }
+
+    .slide-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: auto;
+      width: 100%;
+    }
+
+    /* Navigation Header */
+    header {
+      background-color: rgba(17, 19, 26, 0.8);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-accent {
+      color: var(--accent-color);
+    }
+
+    .slide-indicator {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background-color: rgba(31, 41, 61, 0.5);
+      border: 1px solid var(--border-color);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+    }
+
+    /* Navigation Footer */
+    footer {
+      background-color: rgba(17, 19, 26, 0.8);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid var(--border-color);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    .footer-brand {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn-nav {
+      background-color: rgba(31, 41, 61, 0.8);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .btn-nav:hover {
+      background-color: var(--accent-color);
+      border-color: var(--accent-color);
+    }
+
+    /* Progress bar */
+    .progress-bar-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background-color: rgba(31, 41, 61, 0.3);
+      z-index: 11;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 10%;
+      background-color: var(--accent-color);
+      transition: width 0.3s ease;
+      box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+    }
+
+    /* TYPOGRAPHY */
+    h1 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+    }
+
+    h2 {
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      max-width: 800px;
+      line-height: 1.4;
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-cols: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-cols: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    /* SPECIFIC SLIDE UI */
+    
+    /* Slide 1 - Title */
+    #slide-1 {
+      background-image: url('images/stressed_candidate_resumes.jpg');
+    }
+    
+    /* Slide 2 - Callout Diagram */
+    .callout-diagram-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    .callout-image-container {
+      width: 460px;
+      height: 320px;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .callout-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .callout-pointer {
+      position: absolute;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      padding: 0.4rem 0.8rem;
+      border-radius: 10px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .callout-pointer::before {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--accent-color);
+      border: 2px solid white;
+    }
+
+    /* Placement of pointers around mockup */
+    #pointer-1 { top: 15%; left: 5%; } /* Outdated Templates */
+    #pointer-1::before { top: 50%; right: -60px; }
+    
+    #pointer-2 { top: 45%; left: -5%; } /* Formatting Errors */
+    #pointer-2::before { top: 50%; right: -110px; }
+
+    #pointer-3 { top: 8%; right: 5%; } /* Lack of Keywords */
+    #pointer-3::before { top: 50%; left: -60px; }
+
+    #pointer-4 { top: 40%; right: -2%; } /* Zero Analytics */
+    #pointer-4::before { top: 50%; left: -90px; }
+
+    #pointer-5 { bottom: 5%; left: 35%; } /* Recruiter Blindspots */
+    #pointer-5::before { top: -40px; left: 50%; }
+
+    /* Slide 3 - Vertical Cards */
+    .feature-card {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1rem;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(168, 85, 247, 0.4);
+    }
+
+    .card-icon {
+      background-color: rgba(168, 85, 247, 0.1);
+      border: 1px solid rgba(168, 85, 247, 0.2);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-color);
+    }
+
+    .feature-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .feature-card p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Slide 4 - Cascade Diagram */
+    .cascade-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    .cascade-node {
+      background: linear-gradient(90deg, rgba(31, 41, 61, 0.4) 0%, rgba(17, 19, 26, 0.8) 100%);
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--accent-color);
+      padding: 1.2rem 2rem;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .cascade-node:nth-child(1) { margin-left: 0; }
+    .cascade-node:nth-child(2) { margin-left: 3rem; border-left-color: #8B5CF6; }
+    .cascade-node:nth-child(3) { margin-left: 6rem; border-left-color: #6366F1; }
+    .cascade-node:nth-child(4) { margin-left: 9rem; border-left-color: #3B82F6; }
+    .cascade-node:nth-child(5) { margin-left: 12rem; border-left-color: var(--danger); }
+
+    .node-title {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .node-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Slide 5 - Solution */
+    #slide-5 {
+      text-align: center;
+    }
+    
+    .solution-title {
+      font-size: 4rem;
+      font-weight: 800;
+      margin-bottom: 2rem;
+      background: linear-gradient(to right, #FFF 30%, var(--accent-color) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .solution-mockup {
+      width: 640px;
+      height: 340px;
+      margin: 0 auto;
+      border-radius: 20px;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      overflow: hidden;
+      box-shadow: 0 0 50px rgba(168, 85, 247, 0.2);
+    }
+
+    .solution-mockup img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Slide 6 - Feature Grid */
+    .grid-left {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .feature-item-wide {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+
+    .feature-item-wide h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .feature-item-wide p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .features-right-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .feature-subcard {
+      background: linear-gradient(135deg, #11131A 0%, #0F172A 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .search-mockup-bar {
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+    }
+
+    .search-pulse {
+      width: 2px;
+      height: 15px;
+      background-color: var(--accent-color);
+      animation: blink 1s infinite;
+    }
+
+    /* Slide 7 - Visibility and sync */
+    .stats-card {
+      background: linear-gradient(135deg, rgba(31, 41, 61, 0.3) 0%, rgba(17, 19, 26, 0.9) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .stats-value {
+      font-size: 4rem;
+      font-weight: 800;
+      color: var(--accent-color);
+      letter-spacing: -0.04em;
+    }
+
+    .sync-avatars {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+    }
+
+    .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid var(--border-color);
+      background-color: #1F293D;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    .status-dot {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-color: var(--success);
+      border: 2px solid var(--bg-primary);
+    }
+
+    /* Slide 8 - Split workflow */
+    .split-layout {
+      display: grid;
+      grid-template-cols: 1fr 1fr;
+      height: 80%;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .split-pane {
+      padding: 4rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .split-pane.dark {
+      background-color: #050508;
+      border-right: 1px solid var(--border-color);
+    }
+
+    .split-pane.light {
+      background-color: var(--bg-secondary);
+    }
+
+    .workflow-mock {
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Slide 9 - Comparison Table */
+    .table-container {
+      max-width: 900px;
+      margin: 0 auto;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      padding: 1.25rem 2rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--bg-secondary);
+      font-weight: 700;
+      color: var(--text-main);
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    td {
+      background-color: rgba(17, 19, 26, 0.4);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .col-classic {
+      width: 50%;
+      border-right: 1px solid var(--border-color);
+    }
+
+    .col-legend {
+      width: 50%;
+      background-color: rgba(168, 85, 247, 0.03);
+    }
+
+    .icon-status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      font-size: 0.65rem;
+      margin-right: 0.75rem;
+      font-weight: 800;
+    }
+
+    .icon-status.cross {
+      background-color: rgba(239, 68, 68, 0.15);
+      color: var(--danger);
+    }
+
+    .icon-status.tick {
+      background-color: rgba(16, 185, 129, 0.15);
+      color: var(--success);
+    }
+
+    /* Slide 10 - CTA & Pricing */
+    #slide-10 {
+      background: radial-gradient(circle at center, rgba(168, 85, 247, 0.15) 0%, rgba(10, 12, 16, 0) 70%);
+      text-align: center;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-cols: repeat(3, 1fr);
+      gap: 1.25rem;
+      max-width: 900px;
+      margin: 1.5rem auto;
+    }
+
+    .pricing-card {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.25rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      position: relative;
+    }
+
+    .pricing-card.popular {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--accent-color);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.2rem 0.75rem;
+      border-radius: 9999px;
+      text-transform: uppercase;
+    }
+
+    .price-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: white;
+    }
+
+    .price-value span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .btn-cta {
+      display: inline-block;
+      background-color: var(--accent-color);
+      color: white;
+      text-decoration: none;
+      padding: 0.8rem 2.5rem;
+      border-radius: 12px;
+      font-weight: 700;
+      margin-top: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 20px rgba(168, 85, 247, 0.3);
+    }
+
+    .btn-cta:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 15px 25px rgba(168, 85, 247, 0.4);
+    }
+
+    /* KEYFRAMES */
+    @keyframes blink {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="presentation-container">
+    
+    <!-- Top Navigation Header -->
+    <header>
+      <div class="logo">
+        <svg class="logo-accent" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="4 17 10 11 4 5"></polyline>
+          <line x1="12" y1="19" x2="20" y2="19"></line>
+        </svg>
+        <span>Resume<span class="logo-accent">Legend</span></span>
+      </div>
+      <div class="slide-indicator" id="current-slide-badge">01 / 10</div>
+    </header>
+
+    <!-- Slide Wrapper -->
+    <div class="slide-wrapper">
+      
+      <!-- SLIDE 1: Intro Title -->
+      <div class="slide active" id="slide-1">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <h1>The Problem of<br>Resume Writing & Filtering.</h1>
+          <p class="subtitle mt-4">
+            Thousands of talented developers continue to build CVs in outdated templates with zero ATS visibility, getting filtered out by recruitment algorithms.
+          </p>
+        </div>
+      </div>
+
+      <!-- SLIDE 2: Outdated Resume Callout Diagram -->
+      <div class="slide" id="slide-2">
+        <div class="slide-content">
+          <h2>Outdated formats have stopped meeting the needs of modern recruitment.</h2>
+          
+          <div class="callout-diagram-wrapper">
+            <div class="callout-image-container">
+              <img src="images/messy_resume_layout.jpg" alt="Messy Resume Format">
+            </div>
+            
+            <div class="callout-pointer" id="pointer-1">
+              <span>Outdated Templates</span>
+              <span style="font-size:0.65rem; color:var(--text-muted)">Unreadable by parsing engines</span>
+            </div>
+            <div class="callout-pointer" id="pointer-2">
+              <span>Formatting Errors</span>
+              <span style="font-size:0.65rem; color:var(--text-muted)">Causes React hydration faults</span>
+            </div>
+            <div class="callout-pointer" id="pointer-3">
+              <span>Lack of Keywords</span>
+              <span style="font-size:0.65rem; color:var(--text-muted)">Missed by recruiter search bots</span>
+            </div>
+            <div class="callout-pointer" id="pointer-4">
+              <span>Zero ATS Analytics</span>
+              <span style="font-size:0.65rem; color:var(--text-muted)">No score validation before applying</span>
+            </div>
+            <div class="callout-pointer" id="pointer-5">
+              <span>Recruiter Blindspots</span>
+              <span style="font-size:0.65rem; color:var(--text-muted)">Doesn't highlight metrics-driven achievements</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: 3 Columns Gaps -->
+      <div class="slide" id="slide-3">
+        <div class="slide-content">
+          <h2>Structural Hurdles of Traditional Resume Building</h2>
+          <div class="grid-3 mt-4">
+            <div class="feature-card">
+              <div class="card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              </div>
+              <h3>Operational Drag</h3>
+              <p>
+                Manually editing resumes for different roles is incredibly slow. Generating tailored CV structures takes hours of copying and pasting.
+              </p>
+            </div>
+            
+            <div class="feature-card">
+              <div class="card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+              </div>
+              <h3>Data Fragility</h3>
+              <p>
+                PDF layouts break when parsed. Static documents get corrupted, lack responsive alignments, and have no cloud backup system.
+              </p>
+            </div>
+            
+            <div class="feature-card">
+              <div class="card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              </div>
+              <h3>Recruiter Blindspots</h3>
+              <p>
+                Impossible to know if your CV matches target keywords. Candidates submit blind applications, resulting in high rejection rates.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 4: Cascade Flowchart -->
+      <div class="slide" id="slide-4">
+        <div class="slide-content">
+          <h2>The Cascade of Job Application Failures</h2>
+          <div class="cascade-flow mt-4">
+            <div class="cascade-node">
+              <span class="node-title">Outdated Formatting</span>
+              <span class="node-desc">Uneven margins and unoptimized structures break parsing</span>
+            </div>
+            <div class="cascade-node">
+              <span class="node-title">Low ATS Score</span>
+              <span class="node-desc">Missing critical core tech and metric keywords</span>
+            </div>
+            <div class="cascade-node">
+              <span class="node-title">Automated Bot Filtration</span>
+              <span class="node-desc">Applicant Tracking System flags and filters the CV automatically</span>
+            </div>
+            <div class="cascade-node">
+              <span class="node-title">Zero Recruiter Views</span>
+              <span class="node-desc">The application never reaches human review eyes</span>
+            </div>
+            <div class="cascade-node">
+              <span class="node-title">Career Stagnation</span>
+              <span class="node-desc">Job seeker remains stuck without securing technical interviews</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 5: Solution Display -->
+      <div class="slide" id="slide-5">
+        <div class="slide-content">
+          <h2 class="solution-title">We solved this problem.</h2>
+          <div class="solution-mockup">
+            <img src="images/resumelegend_dashboard_mockup.jpg" alt="ResumeLegend Dashboard Mockup">
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 6: Features Pane -->
+      <div class="slide" id="slide-6">
+        <div class="slide-content">
+          <h2>Frictionless AI Parsing & Formatting</h2>
+          <div class="grid-2 mt-4">
+            <div class="grid-left">
+              <div class="feature-item-wide">
+                <div class="card-icon" style="width:40px; height:40px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16m8-8H4"></path></svg></div>
+                <div>
+                  <h4>Frictionless CV Input & Management</h4>
+                  <p>Upload files or import repositories. Generate structured AI profiles in seconds.</p>
+                </div>
+              </div>
+              <div class="feature-item-wide">
+                <div class="card-icon" style="width:40px; height:40px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></div>
+                <div>
+                  <h4>Instant Repository Ingestion</h4>
+                  <p>Sync your GitHub repositories automatically, pulling real tech stacks and coding metrics.</p>
+                </div>
+              </div>
+              <div class="feature-item-wide">
+                <div class="card-icon" style="width:40px; height:40px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></div>
+                <div>
+                  <h4>Unbreakable Cloud Storage</h4>
+                  <p>100% cloud backed. Work on PC, tablet, or smartphone with zero risk of data loss.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="features-right-pane">
+              <div class="feature-subcard">
+                <h4 style="font-weight:700">Instant ATS Keyword Search</h4>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.25rem;">
+                  Recruiters search profiles by exact keyword matches. Find out where you rank.
+                </p>
+                <div class="search-mockup-bar">
+                  <span>Query: react, fastapi, docker</span>
+                  <span class="search-pulse"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 7: Visibility Stats -->
+      <div class="slide" id="slide-7">
+        <div class="slide-content">
+          <h2>Complete ATS Visibility</h2>
+          <div class="stats-card mt-4">
+            <div>
+              <span style="font-size: 0.8rem; font-family:'JetBrains Mono', monospace; text-transform:uppercase; color:var(--text-muted);">Recruiter Keyword Compatibility Score</span>
+              <p class="stats-value">98%</p>
+              <p style="font-size:0.9rem; color:var(--success); font-weight:600; margin-top:0.5rem;">✔ EXCELLENT MATCH - Pass structural filters</p>
+            </div>
+            <div style="text-align: right; max-width: 500px;">
+              <h3 style="margin-bottom:1rem;">Automated Balances</h3>
+              <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+                Log updates. The system auto-calculates keywords, optimizes achievements based on metrics, and syncs across all templates instantly.
+              </p>
+            </div>
+          </div>
+          
+          <div class="feature-card" style="align-items:flex-start; text-align:left; padding: 2rem;">
+            <h3>Team & Collaborative Synchronization</h3>
+            <p>Multiple users can edit, review, and evaluate ATS recommendations simultaneously without conflicts.</p>
+            <div class="sync-avatars">
+              <div class="avatar-wrapper"><div class="avatar">AB</div><span class="status-dot"></span></div>
+              <div class="avatar-wrapper"><div class="avatar">JB</div><span class="status-dot"></span></div>
+              <div class="avatar-wrapper"><div class="avatar">SC</div><span class="status-dot"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 8: Split Screen Workflow -->
+      <div class="slide" id="slide-8">
+        <div class="slide-content" style="height: 100%; display: flex; flex-direction: column;">
+          <h2 style="margin-bottom: 1.5rem;">Symmetric Real-time Synchronization</h2>
+          <div class="split-layout">
+            <div class="split-pane dark">
+              <h3 style="font-size:1.5rem; font-weight:800;">The Candidate Workspace</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted); line-height: 1.6;">
+                Job seeker inputs raw achievements, repository URLs, and credentials on mobile or browser. Information is instantly uploaded to the cloud.
+              </p>
+              <div class="workflow-mock">
+                [Candidate Node] Sync: CONNECTED<br>
+                > uploading: fastapi-microservice.json<br>
+                > response: 200 OK (database profile updated)
+              </div>
+            </div>
+            
+            <div class="split-pane light">
+              <h3 style="font-size:1.5rem; font-weight:800; color:var(--accent-color);">The Recruiter Dashboard</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted); line-height: 1.6;">
+                System automatically updates the compatibility indexes, formatting layout, and keywords across all recruiter-facing dashboards.
+              </p>
+              <div class="workflow-mock" style="background-color: var(--bg-secondary); border-color: rgba(168, 85, 247, 0.2);">
+                [Recruiter View] Indexing Completed<br>
+                > Score: 98% Match (FastAPI, React, Docker)<br>
+                > Status: Highly compatible
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 9: Comparison Table -->
+      <div class="slide" id="slide-9">
+        <div class="slide-content">
+          <h2>Paper Templates vs. ResumeLegend</h2>
+          <div class="table-container mt-4">
+            <table>
+              <thead>
+                <tr>
+                  <th class="col-classic">Traditional Templates</th>
+                  <th class="col-legend">ResumeLegend Framework</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-classic"><span class="icon-status cross">✖</span> Slow / Manual Formatting</td>
+                  <td class="col-legend"><span class="icon-status tick">✔</span> 1-Second AI Formatting</td>
+                </tr>
+                <tr>
+                  <td class="col-classic"><span class="icon-status cross">✖</span> Zero ATS Compatibility Feedback</td>
+                  <td class="col-legend"><span class="icon-status tick">✔</span> Real-Time ATS Insights</td>
+                </tr>
+                <tr>
+                  <td class="col-classic"><span class="icon-status cross">✖</span> Vulnerable to layout breakage</td>
+                  <td class="col-legend"><span class="icon-status tick">✔</span> Cloud-Backed Responsive Canvas</td>
+                </tr>
+                <tr>
+                  <td class="col-classic"><span class="icon-status cross">✖</span> No keyword optimization advice</td>
+                  <td class="col-legend"><span class="icon-status tick">✔</span> Complete Flaw & Keyword Tracking</td>
+                </tr>
+                <tr>
+                  <td class="col-classic"><span class="icon-status cross">✖</span> Static editing only</td>
+                  <td class="col-legend"><span class="icon-status tick">✔</span> Simultaneous AI Refiner Sync</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 10: Call to Action & Pricing -->
+      <div class="slide" id="slide-10">
+        <div class="slide-content">
+          <h2 style="margin-bottom:0.5rem;">Move from manual formatting to AI optimization.</h2>
+          <p class="subtitle" style="margin: 0 auto; font-size:1.1rem; text-align:center;">Faster. More convenient. Recruiters notice the difference.</p>
+          
+          <div class="pricing-grid">
+            <div class="pricing-card">
+              <span style="font-weight:700; color:var(--text-muted);">Free Plan</span>
+              <p class="price-value">$0 <span>/ forever</span></p>
+              <p style="font-size:0.75rem; color:var(--text-muted); line-height: 1.5;">2 Resume Capacity<br>Developer HTML Template<br>Manual Text Fields</p>
+            </div>
+            
+            <div class="pricing-card popular">
+              <div class="pricing-badge">Popular</div>
+              <span style="font-weight:700; color:var(--accent-color);">Pro Plan</span>
+              <p class="price-value">$5 <span>/ month</span></p>
+              <p style="font-size:0.75rem; color:var(--text-muted); line-height: 1.5;">Unlimited Resumes<br>Premium Layouts (Minimal/Modern)<br>Full ATS Flaw Analyzer</p>
+            </div>
+            
+            <div class="pricing-card">
+              <span style="font-weight:700; color:var(--success);">Ultra Plan</span>
+              <p class="price-value">$25 <span>/ month</span></p>
+              <p style="font-size:0.75rem; color:var(--text-muted); line-height: 1.5;">All Pro Features Included<br>1-Click AI Flaws Resolver<br>Autonomous Metrics Writer</p>
+            </div>
+          </div>
+          
+          <a href="#" class="btn-cta">Build Your Legend For Free</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Navigation Footer -->
+    <footer>
+      <span class="footer-brand">ResumeLegend pitch deck | 2026</span>
+      <div class="nav-buttons">
+        <button class="btn-nav" id="btn-prev" onclick="navigateSlide(-1)">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <span>Prev</span>
+        </button>
+        <button class="btn-nav" id="btn-next" onclick="navigateSlide(1)">
+          <span>Next</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </footer>
+    
+    <!-- Progress Indicator Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="slide-progress-fill"></div>
+    </div>
+
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const badge = document.getElementById('current-slide-badge');
+    const fill = document.getElementById('slide-progress-fill');
+
+    function updateSlideshow() {
+      slides.forEach((slide, idx) => {
+        if (idx === currentSlide) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+
+      // Update header indicator
+      const totalSlides = slides.length;
+      const displayNum = String(currentSlide + 1).padStart(2, '0');
+      const displayTotal = String(totalSlides).padStart(2, '0');
+      badge.textContent = `${displayNum} / ${displayTotal}`;
+
+      // Update progress bar
+      const progressPercent = ((currentSlide + 1) / totalSlides) * 100;
+      fill.style.width = `${progressPercent}%`;
+    }
+
+    function navigateSlide(direction) {
+      currentSlide += direction;
+      if (currentSlide < 0) currentSlide = slides.length - 1;
+      if (currentSlide >= slides.length) currentSlide = 0;
+      updateSlideshow();
+    }
+
+    // Keyboard Controls
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        navigateSlide(1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'Backspace') {
+        e.preventDefault();
+        navigateSlide(-1);
+      }
+    });
+
+    // Initialize
+    updateSlideshow();
+  </script>
+</body>
+</html>
