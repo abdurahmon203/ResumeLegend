@@ -8,11 +8,16 @@ services:
     environment:
       POSTGRES_DB: resumelegend
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: resumelegend_prod_pass_2026
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   backend:
     build:
@@ -23,26 +28,29 @@ services:
     env_file:
       - .env
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/resumelegend
-      - GITHUB_CALLBACK_URL=http://localhost:8000/auth/github/callback
-      - FRONTEND_URL=http://localhost:3000
+      - DATABASE_URL=postgresql://postgres:resumelegend_prod_pass_2026@db:5432/resumelegend
+      - GITHUB_CALLBACK_URL=https://resumelegend.online/api/auth/github/callback
+      - FRONTEND_URL=https://resumelegend.online
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8010:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: https://resumelegend.online
     container_name: resumelegend-frontend
     restart: always
     env_file:
       - .env
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - NEXT_PUBLIC_API_URL=https://resumelegend.online
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3010:3000"
     depends_on:
       - backend
 
