@@ -17,7 +17,10 @@ except Exception as e:
 app = FastAPI(
     title=settings.PROJECT_NAME,
     description="Sovereign AI-powered Resume Builder backend for developers.",
-    version="1.0.0"
+    version="1.0.0",
+    openapi_url="/api/openapi.json",
+    docs_url="/docs",
+    redoc_url="/redoc"
 )
 
 # Configure CORS Middleware
