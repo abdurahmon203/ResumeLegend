@@ -35,7 +35,8 @@ import {
   FolderArchive,
   Settings,
   Sun,
-  Moon
+  Moon,
+  Menu
 } from 'lucide-react';
 import { Github } from '@/components/icons';
 import { api, Repository, Resume, Education } from '../../lib/api';
@@ -51,6 +52,7 @@ export default function DashboardPage() {
   const [loadingResumes, setLoadingResumes] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const [generating, setGenerating] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   // Subscription plan states
   const [userPlan, setUserPlan] = useState<'free' | 'pro' | 'ultra'>('free');
@@ -787,12 +789,30 @@ export default function DashboardPage() {
       <main className="flex-1 flex flex-col min-w-0">
         
         {/* Mobile Header Navbar */}
-        <header className="bg-[#11131A] border-b border-[#1F293D] px-6 py-4 flex md:hidden items-center justify-between sticky top-0 z-40">
-          <div className="flex items-center gap-2 font-bold text-base text-white">
-            <Terminal className="h-4 w-4 text-[#A855F7]" />
-            <span>Resume<span className="text-[#A855F7]">Legend</span></span>
-          </div>
+        <header className="bg-[#11131A] border-b border-[#1F293D] px-4 py-3 flex md:hidden items-center justify-between sticky top-0 z-40">
           <div className="flex items-center gap-3">
+            <button 
+              onClick={() => setMobileMenuOpen(true)}
+              className="p-2 rounded-xl bg-[#1F293D] text-white cursor-pointer hover:bg-gray-800 transition-colors"
+              title="Open Navigation Menu"
+            >
+              <Menu className="h-5 w-5 text-[#A855F7]" />
+            </button>
+            <div className="flex items-center gap-2 font-bold text-base text-white">
+              <Terminal className="h-4 w-4 text-[#A855F7]" />
+              <span>Resume<span className="text-[#A855F7]">Legend</span></span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={handleCreateResume}
+              className="flex items-center gap-1 bg-[#A855F7] hover:bg-purple-600 text-white text-xs font-bold py-1.5 px-3 rounded-lg shadow-md font-mono"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              <span>{lang === 'en' ? 'Create' : 'Создать'}</span>
+            </button>
+
             <button 
               onClick={toggleDashboardTheme}
               title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
@@ -800,22 +820,232 @@ export default function DashboardPage() {
             >
               {theme === 'dark' ? <Sun className="h-3.5 w-3.5 text-amber-400" /> : <Moon className="h-3.5 w-3.5 text-purple-400" />}
             </button>
-            <button 
-              onClick={() => router.push('/uploaded-cvs')}
-              className="text-xs text-gray-400 font-mono"
-            >
-              {lang === 'en' ? 'Uploaded CVs' : 'Загруженные резюме'}
-            </button>
-            <button 
-              onClick={handleLogout}
-              className="text-gray-400 hover:text-white"
-            >
-              <LogOut className="h-4 w-4" />
-            </button>
           </div>
         </header>
 
-        {/* Desktop Desktop minimal header */}
+        {/* Mobile Drawer Overlay */}
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 z-50 md:hidden flex">
+            {/* Backdrop */}
+            <div 
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            
+            {/* Drawer Container */}
+            <div className="relative w-4/5 max-w-xs bg-[#11131A] border-r border-[#1F293D] h-full flex flex-col justify-between p-6 z-10 overflow-y-auto">
+              <div className="space-y-6">
+                {/* Header */}
+                <div className="flex items-center justify-between border-b border-[#1F293D] pb-4">
+                  <div className="flex items-center gap-2.5 font-bold text-base text-white">
+                    <Terminal className="h-5 w-5 text-[#A855F7]" />
+                    <span className="tracking-tight">Resume<span className="text-[#A855F7]">Legend</span></span>
+                  </div>
+                  <button 
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="p-1.5 rounded-lg text-gray-400 hover:text-white bg-[#1F293D]"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+
+                {/* Nav items */}
+                <nav className="space-y-1.5">
+                  <button 
+                    onClick={() => {
+                      setActiveSidebarTab('dashboard');
+                      setDashboardRightTab('resumes');
+                      setMobileMenuOpen(false);
+                    }}
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold ${
+                      activeSidebarTab === 'dashboard' ? 'bg-[#A855F7] text-white font-bold' : 'text-gray-300 hover:bg-[#1F293D]'
+                    }`}
+                  >
+                    <LayoutDashboard className="h-4 w-4" />
+                    <span>{lang === 'en' ? 'Dashboard' : 'Обзор'}</span>
+                  </button>
+
+                  <button 
+                    onClick={() => {
+                      setActiveSidebarTab('builder');
+                      setDashboardRightTab('resumes');
+                      setMobileMenuOpen(false);
+                    }}
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold ${
+                      activeSidebarTab === 'builder' ? 'bg-[#A855F7] text-white font-bold' : 'text-gray-300 hover:bg-[#1F293D]'
+                    }`}
+                  >
+                    <PenTool className="h-4 w-4" />
+                    <span>{lang === 'en' ? 'CV Builder' : 'Конструктор'}</span>
+                  </button>
+
+                  <button 
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      router.push('/templates');
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-gray-300 hover:bg-[#1F293D]"
+                  >
+                    <LayoutGrid className="h-4 w-4 text-[#A855F7]" />
+                    <span>{lang === 'en' ? 'Templates' : 'Шаблоны'}</span>
+                  </button>
+
+                  <button 
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      if (userPlan === 'free') {
+                        setRequiredPlan('pro');
+                        setFeatureExplanation(lang === 'en' ? 'AI CV Analyzer requires Pro or Ultra subscription access.' : 'Анализатор резюме требует подписку уровня Про или Ультра.');
+                        setUpgradeModalOpen(true);
+                      } else {
+                        setActiveSidebarTab('analytics');
+                        setDashboardRightTab('analyzer');
+                      }
+                    }}
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold ${
+                      activeSidebarTab === 'analytics' ? 'bg-[#A855F7] text-white font-bold' : 'text-gray-300 hover:bg-[#1F293D]'
+                    }`}
+                  >
+                    <BarChart2 className="h-4 w-4" />
+                    <span>{lang === 'en' ? 'AI Analytics' : 'Аналитика'}</span>
+                  </button>
+
+                  <Link 
+                    href="/uploaded-cvs"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-gray-300 hover:bg-[#1F293D]"
+                  >
+                    <FolderArchive className="h-4 w-4 text-[#A855F7]" />
+                    <span>{lang === 'en' ? 'Uploaded CVs' : 'Загруженные резюме'}</span>
+                  </Link>
+
+                  <button 
+                    onClick={() => {
+                      setActiveSidebarTab('mock-interview');
+                      setMobileMenuOpen(false);
+                    }}
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold ${
+                      activeSidebarTab === 'mock-interview' ? 'bg-[#A855F7] text-white font-bold' : 'text-gray-300 hover:bg-[#1F293D]'
+                    }`}
+                  >
+                    <Brain className="h-4 w-4" />
+                    <span>💬 {lang === 'en' ? 'Mock Interview' : 'Собеседование'}</span>
+                  </button>
+
+                  <button 
+                    onClick={() => {
+                      setActiveSidebarTab('settings');
+                      setMobileMenuOpen(false);
+                    }}
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold ${
+                      activeSidebarTab === 'settings' ? 'bg-[#A855F7] text-white font-bold' : 'text-gray-300 hover:bg-[#1F293D]'
+                    }`}
+                  >
+                    <Settings className="h-4 w-4" />
+                    <span>{lang === 'en' ? 'Settings' : 'Настройки'}</span>
+                  </button>
+                </nav>
+              </div>
+
+              {/* User info & logout */}
+              <div className="space-y-4 pt-4 border-t border-[#1F293D]">
+                <div className="flex items-center justify-between bg-[#0A0C10] p-3 rounded-xl border border-[#1F293D]">
+                  <span className="text-xs font-mono text-gray-400">🌐 {lang === 'en' ? 'Language' : 'Язык'}</span>
+                  <button 
+                    onClick={() => {
+                      const newLang = lang === 'en' ? 'ru' : 'en';
+                      setLang(newLang);
+                      localStorage.setItem('lang', newLang);
+                      window.dispatchEvent(new Event('lang-changed'));
+                    }}
+                    className="px-2.5 py-1 bg-[#1F293D] hover:bg-[#2B3952] rounded text-xs font-mono font-bold text-white uppercase"
+                  >
+                    {lang === 'en' ? 'EN' : 'RU'}
+                  </button>
+                </div>
+
+                <div className="bg-[#0A0C10] p-3 rounded-xl border border-[#1F293D] space-y-1">
+                  <span className="text-[10px] uppercase font-bold text-[#A855F7]">{userPlan} Plan</span>
+                  <p className="text-xs text-gray-400 truncate">{userEmail}</p>
+                </div>
+
+                <button 
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    handleLogout();
+                  }}
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold hover:bg-red-500/20 transition-all"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span>{lang === 'en' ? 'Logout' : 'Выйти'}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Mobile Bottom Navigation Bar */}
+        <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#11131A]/95 backdrop-blur-md border-t border-[#1F293D] md:hidden flex items-center justify-around py-2 px-1 shadow-2xl">
+          <button 
+            onClick={() => {
+              setActiveSidebarTab('dashboard');
+              setDashboardRightTab('resumes');
+            }}
+            className={`flex flex-col items-center gap-1 p-1 text-[10px] font-mono font-bold transition-all ${
+              activeSidebarTab === 'dashboard' ? 'text-[#A855F7]' : 'text-gray-400'
+            }`}
+          >
+            <LayoutDashboard className="h-4 w-4" />
+            <span>Dashboard</span>
+          </button>
+
+          <button 
+            onClick={() => {
+              setActiveSidebarTab('builder');
+              setDashboardRightTab('resumes');
+            }}
+            className={`flex flex-col items-center gap-1 p-1 text-[10px] font-mono font-bold transition-all ${
+              activeSidebarTab === 'builder' ? 'text-[#A855F7]' : 'text-gray-400'
+            }`}
+          >
+            <PenTool className="h-4 w-4" />
+            <span>Builder</span>
+          </button>
+
+          <button 
+            onClick={handleCreateResume}
+            className="flex flex-col items-center justify-center w-11 h-11 rounded-full bg-[#A855F7] text-white shadow-[0_0_15px_rgba(168,85,247,0.5)] -mt-4 border-2 border-[#0A0C10] cursor-pointer"
+            title="Create New CV"
+          >
+            <Plus className="h-5 w-5 stroke-[3px]" />
+          </button>
+
+          <button 
+            onClick={() => {
+              setActiveSidebarTab('mock-interview');
+            }}
+            className={`flex flex-col items-center gap-1 p-1 text-[10px] font-mono font-bold transition-all ${
+              activeSidebarTab === 'mock-interview' ? 'text-[#A855F7]' : 'text-gray-400'
+            }`}
+          >
+            <Brain className="h-4 w-4" />
+            <span>Interview</span>
+          </button>
+
+          <button 
+            onClick={() => {
+              setActiveSidebarTab('settings');
+            }}
+            className={`flex flex-col items-center gap-1 p-1 text-[10px] font-mono font-bold transition-all ${
+              activeSidebarTab === 'settings' ? 'text-[#A855F7]' : 'text-gray-400'
+            }`}
+          >
+            <Settings className="h-4 w-4" />
+            <span>Settings</span>
+          </button>
+        </nav>
+
+        {/* Desktop minimal header */}
         <header className="bg-[#11131A] border-b border-[#1F293D] px-8 py-5 hidden md:flex items-center justify-between sticky top-0 z-35">
           <h1 className="text-sm font-bold text-white uppercase tracking-wider font-mono">
             {activeSidebarTab === 'dashboard' 
@@ -841,7 +1071,7 @@ export default function DashboardPage() {
         </header>
 
         {/* Content Body Grid */}
-        <div className="p-8 max-w-7xl mx-auto w-full flex-1 flex flex-col gap-8">
+        <div className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto w-full flex-1 flex flex-col gap-8 pb-24 md:pb-8">
           
           {/* TAB 1: OVERVIEW DASHBOARD */}
           {activeSidebarTab === 'dashboard' && (
