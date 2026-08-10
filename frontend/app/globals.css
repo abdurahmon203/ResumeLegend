@@ -347,6 +347,61 @@ html.light ::-webkit-scrollbar-thumb:hover {
   box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
 }
 
+/* Light mode overrides for Hero Banners & Dark Gradients */
+html.light [class*="from-[#11131A]"],
+html.light [class*="from-[#0A0C10]"],
+html.light [class*="via-[#161B26]"],
+html.light [class*="to-[#11131A]"] {
+  background-image: linear-gradient(to right, #FFFFFF, #F8FAFC, #FFFFFF) !important;
+  background-color: #FFFFFF !important;
+  border-color: #E2E8F0 !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05) !important;
+}
+
+html.light [class*="from-[#11131A]"] h2,
+html.light [class*="from-[#11131A]"] h3,
+html.light [class*="from-[#11131A]"] .text-white,
+html.light [class*="via-[#161B26]"] h2,
+html.light [class*="via-[#161B26]"] h3,
+html.light [class*="via-[#161B26]"] .text-white {
+  color: #0F172A !important;
+}
+
+html.light [class*="from-[#11131A]"] p,
+html.light [class*="from-[#11131A]"] .text-gray-400,
+html.light [class*="via-[#161B26]"] p,
+html.light [class*="via-[#161B26]"] .text-gray-400 {
+  color: #475569 !important;
+}
+
+html.light .bg-\[\#0A0C10\]\/80 {
+  background-color: #F1F5F9 !important;
+  border-color: #CBD5E1 !important;
+}
+
+html.light .bg-\[\#0A0C10\]\/80 .text-white {
+  color: #0F172A !important;
+}
+
+html.light .bg-\[\#0A0C10\]\/80 .text-gray-300 {
+  color: #475569 !important;
+}
+
+/* Textarea and input controls in Light Mode */
+html.light textarea,
+html.light input[type="text"],
+html.light input[type="email"],
+html.light input[type="password"] {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  border-color: #CBD5E1 !important;
+}
+
+html.light textarea::placeholder,
+html.light input::placeholder {
+  color: #94A3B8 !important;
+}
+
 /* Custom animations */
 @keyframes pulse-glow {
   0%, 100% {
