@@ -705,19 +705,11 @@ export default function UploadedCVsPage() {
               </button>
               
               <button
-                onClick={async () => {
-                  try {
-                    const upgraded = await api.upgradePlan(requiredPlan);
-                    setUserPlan(requiredPlan);
-                    setUpgradeModalOpen(false);
-                    showAlert("Upgrade Success", `Plan upgraded to ${requiredPlan.toUpperCase()} successfully!`);
-                    fetchResumes(); // refresh list to update locked elements
-                  } catch (err) {
-                    console.error(err);
-                    showAlert("Upgrade Failed", "Simulated upgrade failed. Please try again.");
-                  }
+                onClick={() => {
+                  setUpgradeModalOpen(false);
+                  router.push('/pricing');
                 }}
-                className="bg-[#A855F7] hover:bg-purple-600 text-white text-xs font-semibold py-2 rounded-lg transition-colors cursor-pointer text-center"
+                className="bg-[#A855F7] hover:bg-purple-600 text-white text-xs font-semibold py-2 rounded-lg transition-colors cursor-pointer text-center font-mono"
               >
                 Upgrade to {requiredPlan.toUpperCase()}
               </button>

@@ -431,16 +431,9 @@ export default function TemplatesPage() {
                 </button>
                 
                 <button
-                  onClick={async () => {
-                    try {
-                      const upgraded = await api.upgradePlan(requiredPlan);
-                      setUserPlan(requiredPlan);
-                      setUpgradeModalOpen(false);
-                      showAlert("Upgrade Success", `Plan upgraded to ${requiredPlan.toUpperCase()} successfully!`);
-                    } catch (err) {
-                      console.error(err);
-                      showAlert("Upgrade Failed", "Simulated upgrade failed. Please try again.");
-                    }
+                  onClick={() => {
+                    setUpgradeModalOpen(false);
+                    router.push('/pricing');
                   }}
                   className="bg-[#A855F7] hover:bg-purple-600 text-white text-xs font-semibold py-2 rounded-lg transition-colors cursor-pointer text-center font-mono"
                 >

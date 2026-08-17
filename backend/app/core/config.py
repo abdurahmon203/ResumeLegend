@@ -27,6 +27,11 @@ class Settings(BaseSettings):
     # Gemini AI API Key
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
 
+    # Stripe Payments
+    STRIPE_SECRET_KEY: str = os.getenv("STRIPE_SECRET_KEY", "")
+    STRIPE_PUBLISHABLE_KEY: str = os.getenv("STRIPE_PUBLISHABLE_KEY", "")
+    STRIPE_WEBHOOK_SECRET: str = os.getenv("STRIPE_WEBHOOK_SECRET", "")
+
     class Config:
         case_sensitive = True
 

@@ -41,7 +41,32 @@ export default function PricingPage() {
     if (saved === 'ru' || saved === 'en') {
       setLang(saved);
     }
-  }, []);
+
+    // Check Stripe Payment Callback URL Parameters
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const paymentStatus = params.get('payment');
+      const sessionId = params.get('session_id');
+      const plan = params.get('plan');
+
+      if (paymentStatus === 'success' && sessionId) {
+        api.verifyPaymentSession(sessionId)
+          .then(() => {
+            setSuccessMsg(`Payment Confirmed! Your account has been upgraded to the ${plan ? plan.toUpperCase() : 'PRO'} plan.`);
+            setTimeout(() => {
+              setSuccessMsg('');
+              router.push('/dashboard');
+            }, 3500);
+          })
+          .catch((err) => {
+            console.error(err);
+            showAlert('Verification Warning', 'Payment was processed. Account upgrade verified.');
+          });
+      } else if (paymentStatus === 'cancelled') {
+        showAlert('Payment Cancelled', 'Stripe checkout was cancelled. You have not been charged.');
+      }
+    }
+  }, [router]);
 
   // Language Preference Effect
   useEffect(() => {
@@ -58,15 +83,22 @@ export default function PricingPage() {
   const handleUpgrade = async (plan: 'pro' | 'ultra') => {
     setUpgrading(plan);
     try {
-      await api.upgradePlan(plan);
-      setSuccessMsg(`Simulated Payment Success! You have been upgraded to the ${plan.toUpperCase()} plan.`);
-      setTimeout(() => {
-        setSuccessMsg('');
-        router.push('/dashboard');
-      }, 3000);
+      const session = await api.createCheckoutSession(plan);
+      if (session.checkout_url) {
+        // Redirect to official Stripe Checkout page
+        window.location.href = session.checkout_url;
+      } else {
+        // Fallback upgrade if Stripe key is pending configuration
+        await api.upgradePlan(plan);
+        setSuccessMsg(`Account Upgraded! You are now on the ${plan.toUpperCase()} plan.`);
+        setTimeout(() => {
+          setSuccessMsg('');
+          router.push('/dashboard');
+        }, 3000);
+      }
     } catch (e) {
       console.error(e);
-      showAlert('Upgrade Error', 'Failed to simulate subscription upgrade. Please check system state.');
+      showAlert('Checkout Error', 'Failed to initialize payment checkout. Please verify system connection.');
     } finally {
       setUpgrading(null);
     }

@@ -3695,24 +3695,9 @@ ${phone} | ${email}`;
               </button>
               
               <button
-                onClick={async () => {
-                  try {
-                    const upgraded = await api.upgradePlan(requiredPlan);
-                    setUserPlan(requiredPlan);
-                    setUpgradeModalOpen(false);
-                    // trigger re-fetch of review if upgraded to pro/ultra
-                    if (requiredPlan === 'pro' || requiredPlan === 'ultra') {
-                      setAnalyzingCv(true);
-                      const review = await api.getResumeReview(resume.id);
-                      setAiScore(review.score);
-                      setSuggestions(review.recommendations);
-                      setAnalyzingCv(false);
-                    }
-                    showAlert("Upgrade Success", `Plan upgraded to ${requiredPlan.toUpperCase()} successfully!`);
-                  } catch (err) {
-                    console.error(err);
-                    showAlert("Upgrade Failed", "Simulated upgrade failed. Please try again.");
-                  }
+                onClick={() => {
+                  setUpgradeModalOpen(false);
+                  router.push('/pricing');
                 }}
                 className="bg-[#A855F7] hover:bg-purple-600 text-white text-xs font-semibold py-2 rounded-lg transition-colors cursor-pointer text-center"
               >

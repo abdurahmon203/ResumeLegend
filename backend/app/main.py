@@ -6,6 +6,7 @@ from app.api.auth import router as auth_router
 from app.api.github import router as github_router
 from app.api.resume import router as resume_router
 from app.api.mock_interview import router as mock_interview_router
+from app.api.payment import router as payment_router
 
 # Initialize database tables on startup (resilient auto-migration fallback)
 try:
@@ -35,6 +36,7 @@ app.include_router(auth_router)
 app.include_router(github_router)
 app.include_router(resume_router)
 app.include_router(mock_interview_router)
+app.include_router(payment_router)
 
 
 @app.get("/")

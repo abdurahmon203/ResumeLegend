@@ -885,6 +885,46 @@ export const api = {
     return updatedUser;
   },
 
+  async createCheckoutSession(plan: 'pro' | 'ultra'): Promise<{ checkout_url: string | null; simulated?: boolean; message?: string }> {
+    if (!(await isBackendActive())) {
+      return { checkout_url: null, simulated: true };
+    }
+    const res = await fetch(`${API_BASE_URL}/payment/create-checkout-session`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify({ plan })
+    });
+    if (!res.ok) throw new Error('Failed to initialize Stripe checkout');
+    return res.json();
+  },
+
+  async verifyPaymentSession(sessionId: string): Promise<User> {
+    if (!(await isBackendActive())) {
+      const userStr = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
+      const user = userStr ? JSON.parse(userStr) : null;
+      if (user) {
+        user.plan = 'pro';
+        localStorage.setItem('user', JSON.stringify(user));
+      }
+      return user || { id: 'mock-uuid', username: 'rivera-dev', plan: 'pro' };
+    }
+    const res = await fetch(`${API_BASE_URL}/payment/verify-session`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify({ session_id: sessionId })
+    });
+    if (!res.ok) throw new Error('Failed to verify payment session');
+    const result = await res.json();
+    if (result.plan) {
+      const userStr = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
+      const user = userStr ? JSON.parse(userStr) : { id: result.user_id, username: result.username };
+      user.plan = result.plan;
+      localStorage.setItem('user', JSON.stringify(user));
+      return user;
+    }
+    return result;
+  },
+
   // ----------------------------------------------------
   // Mock Interview API Client Methods
   // ----------------------------------------------------

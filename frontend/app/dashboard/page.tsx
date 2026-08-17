@@ -1765,27 +1765,13 @@ export default function DashboardPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 pt-2">
+            <div className="grid grid-cols-1 gap-3 pt-2">
               <button
-                onClick={() => setUpgradeModalOpen(false)}
-                className="bg-[#0A0C10] border border-[#1F293D] hover:bg-[#1C202C] text-gray-400 hover:text-white text-xs font-semibold py-2 rounded-lg transition-colors cursor-pointer"
-              >
-                Maybe Later
-              </button>
-              
-              <button
-                onClick={async () => {
-                  try {
-                    const upgraded = await api.upgradePlan(requiredPlan);
-                    setUserPlan(requiredPlan);
-                    setUpgradeModalOpen(false);
-                    showAlert("Upgrade Success", `Plan upgraded to ${requiredPlan.toUpperCase()} successfully!`);
-                  } catch (err) {
-                    console.error(err);
-                    showAlert("Upgrade Failed", "Simulated upgrade failed. Please try again.");
-                  }
+                onClick={() => {
+                  setUpgradeModalOpen(false);
+                  router.push('/pricing');
                 }}
-                className="bg-[#A855F7] hover:bg-purple-600 text-white text-xs font-semibold py-2 rounded-lg transition-colors cursor-pointer text-center"
+                className="bg-[#A855F7] hover:bg-purple-600 text-white text-xs font-semibold py-2 rounded-lg transition-colors cursor-pointer shadow-[0_0_15px_rgba(168,85,247,0.3)] font-mono w-full"
               >
                 Upgrade to {requiredPlan.toUpperCase()}
               </button>
