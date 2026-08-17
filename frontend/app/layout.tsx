@@ -13,8 +13,15 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ResumeLegend - Terminal-Grade AI CV Builder",
-  description: "Automate your technical resume generation by syncing directly with GitHub and extracting quantified achievements using AI.",
+  title: "ResumeLegend - Sovereign AI-Powered Resume Builder",
+  description: "Build ATS-engineered, high-conversion developer resumes automatically with AI analysis and instant PDF rendering.",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" }
+    ],
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({

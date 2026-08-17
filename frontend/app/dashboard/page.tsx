@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Logo } from '@/components/Logo';
 import { 
   Terminal, 
   Plus, 
@@ -610,10 +611,9 @@ export default function DashboardPage() {
         
         <div className="space-y-8 px-5">
           {/* Logo */}
-          <div className="flex items-center gap-2.5 font-bold text-lg text-white pl-2">
-            <Terminal className="h-5 w-5 text-[#A855F7]" />
-            <span className="tracking-tight">Resume<span className="text-[#A855F7]">Legend</span></span>
-          </div>
+          <Link href="/" className="flex items-center hover:opacity-90 transition-opacity pl-2">
+            <Logo size="md" />
+          </Link>
 
           {/* Navigation Items */}
           <nav className="space-y-1">
@@ -798,10 +798,9 @@ export default function DashboardPage() {
             >
               <Menu className="h-5 w-5 text-[#A855F7]" />
             </button>
-            <div className="flex items-center gap-2 font-bold text-base text-white">
-              <Terminal className="h-4 w-4 text-[#A855F7]" />
-              <span>Resume<span className="text-[#A855F7]">Legend</span></span>
-            </div>
+            <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
+              <Logo size="sm" />
+            </Link>
           </div>
 
           <div className="flex items-center gap-2">
@@ -837,10 +836,9 @@ export default function DashboardPage() {
               <div className="space-y-6">
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-[#1F293D] pb-4">
-                  <div className="flex items-center gap-2.5 font-bold text-base text-white">
-                    <Terminal className="h-5 w-5 text-[#A855F7]" />
-                    <span className="tracking-tight">Resume<span className="text-[#A855F7]">Legend</span></span>
-                  </div>
+                  <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
+                    <Logo size="sm" />
+                  </Link>
                   <button 
                     onClick={() => setMobileMenuOpen(false)}
                     className="p-1.5 rounded-lg text-gray-400 hover:text-white bg-[#1F293D]"

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Terminal } from 'lucide-react';
+import { Logo } from '@/components/Logo';
 import { Github } from '@/components/icons';
 
 export function Footer() {
@@ -10,11 +10,10 @@ export function Footer() {
     <footer className="border-t border-[#1F293D] bg-[#0A0C10] px-6 py-12 text-[#9CA3AF]">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
         <div className="space-y-2 text-center sm:text-left">
-          <div className="flex items-center justify-center sm:justify-start gap-2 font-mono font-bold text-sm text-white">
-            <Terminal className="h-4 w-4 text-[#A855F7]" />
-            <span>Resume<span className="text-[#A855F7]">Legend</span></span>
+          <div className="flex items-center justify-center sm:justify-start">
+            <Logo size="sm" />
           </div>
-          <p className="text-[10px] text-gray-500">© 2024 ResumeLegend. Terminal-grade precision.</p>
+          <p className="text-[10px] text-gray-500">© 2026 ResumeLegend. Precision AI Resume Engine.</p>
         </div>
         
         <div className="flex gap-6 text-[11px] font-mono">

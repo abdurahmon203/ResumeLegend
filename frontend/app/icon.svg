@@ -1,0 +1,26 @@
+<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="40" height="40" rx="10" fill="#0F172A"/>
+  <rect x="1" y="1" width="38" height="38" rx="9" stroke="url(#border-grad)" stroke-width="2"/>
+  <defs>
+    <linearGradient id="border-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6" />
+      <stop offset="50%" stop-color="#8B5CF6" />
+      <stop offset="100%" stop-color="#A855F7" />
+    </linearGradient>
+    <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6" />
+      <stop offset="50%" stop-color="#8B5CF6" />
+      <stop offset="100%" stop-color="#A855F7" />
+    </linearGradient>
+    <linearGradient id="sparkle-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#C084FC" />
+    </linearGradient>
+  </defs>
+  <path d="M10 8C10 6.89543 10.8954 6 12 6H24L30 12V32C30 33.1046 29.1046 34 28 34H12C10.8954 34 10 33.1046 10 32V8Z" fill="#1E1B4B" stroke="url(#logo-grad)" stroke-width="2.5"/>
+  <path d="M24 6V12H30" stroke="url(#logo-grad)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M15 14H22C24.2091 14 26 15.7909 26 18C26 20.2091 24.2091 22 22 22H15V14Z" stroke="url(#logo-grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M19 22L25 28" stroke="url(#logo-grad)" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M15 14V28" stroke="url(#logo-grad)" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M27 22L28.2 24.8L31 26L28.2 27.2L27 30L25.8 27.2L23 26L25.8 24.8L27 22Z" fill="url(#sparkle-grad)"/>
+</svg>

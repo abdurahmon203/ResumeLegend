@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { Terminal, ArrowRight, Menu, X, Sun, Moon } from 'lucide-react';
 import { Github } from '@/components/icons';
 
+import { Logo } from '@/components/Logo';
+
 interface NavbarProps {
   activeSection?: string;
 }
@@ -60,9 +62,8 @@ export function Navbar({ activeSection }: NavbarProps) {
     <header className="sticky top-0 z-50 bg-[#0A0C10]/95 backdrop-blur-md border-b border-[#1F293D] px-6 py-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 font-mono font-bold text-lg text-white">
-          <Terminal className="h-5 w-5 text-[#A855F7] glow-purple" />
-          <span>Resume<span className="text-[#A855F7]">Legend</span></span>
+        <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
+          <Logo size="md" />
         </Link>
         
         {/* Desktop Navigation Links */}

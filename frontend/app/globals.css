@@ -44,6 +44,11 @@ html.light, [data-theme="light"], body.light {
   --success: #059669;
 }
 
+html.light .logo-text-primary,
+body.light .logo-text-primary {
+  color: #0F172A !important;
+}
+
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
