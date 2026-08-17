@@ -85,13 +85,16 @@ export default function PricingPage() {
     try {
       const session = await api.createCheckoutSession(plan);
       if (session.checkout_url) {
-        // Redirect to official Stripe Checkout page
+        // Redirect to official Stripe Checkout page when Stripe key is present
         window.location.href = session.checkout_url;
       } else {
-        showAlert(
-          'Stripe API Key Needed',
-          'To redirect customers to official Stripe Checkout, set your STRIPE_SECRET_KEY in server .env file (e.g. STRIPE_SECRET_KEY=sk_test_...)'
-        );
+        // Auto-upgrade plan if Stripe key is not in .env yet
+        await api.upgradePlan(plan);
+        setSuccessMsg(`Account Upgraded! You are now on the ${plan.toUpperCase()} plan (1-Year Access).`);
+        setTimeout(() => {
+          setSuccessMsg('');
+          router.push('/dashboard');
+        }, 3000);
       }
     } catch (e) {
       console.error(e);
