@@ -157,7 +157,7 @@ export default function PricingPage() {
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-gray-500">Free Trial</span>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-extrabold text-white">$0</span>
-                  <span className="text-xs text-[#9CA3AF] font-mono">/mo</span>
+                  <span className="text-xs text-[#9CA3AF] font-mono">/ forever</span>
                 </div>
                 <p className="text-xs text-[#9CA3AF]">For quick edits and exploration.</p>
                 
@@ -197,14 +197,21 @@ export default function PricingPage() {
                 RECOMMENDED
               </div>
               <div className="space-y-4">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#3B82F6]">Pro Kit</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#3B82F6]">Pro Kit</span>
+                  <span className="px-2 py-0.5 rounded bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30 text-[9px] font-mono font-bold">1-TIME PAYMENT</span>
+                </div>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-extrabold text-white">$5</span>
-                  <span className="text-xs text-[#9CA3AF] font-mono">/mo</span>
+                  <span className="text-xs text-[#3B82F6] font-mono font-bold">/ 1-year access</span>
                 </div>
-                <p className="text-xs text-[#9CA3AF]">The essential kit for job seekers.</p>
+                <p className="text-xs text-[#9CA3AF]">Pay once, use for a full year.</p>
                 
                 <ul className="space-y-3 pt-4 border-t border-[#1F293D] text-xs">
+                  <li className="flex items-center gap-2 text-[#F3F4F6]">
+                    <CheckCircle2 className="h-4 w-4 text-[#10B981]" />
+                    <span className="font-bold text-[#10B981]">1-Time Payment (365 Days Access)</span>
+                  </li>
                   <li className="flex items-center gap-2 text-[#F3F4F6]">
                     <CheckCircle2 className="h-4 w-4 text-[#10B981]" />
                     <span>Unlimited CVs</span>
@@ -235,11 +242,11 @@ export default function PricingPage() {
                   className="w-full flex items-center justify-center gap-1.5 text-center bg-[#3B82F6] hover:bg-blue-600 text-white py-2.5 rounded-lg text-xs font-semibold transition-colors shadow-[0_0_15px_rgba(59,130,246,0.3)] cursor-pointer disabled:opacity-50"
                 >
                   {upgrading === 'pro' && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-                  <span>Upgrade to Pro Now</span>
+                  <span>Pay $5 Once for 1 Year Pro</span>
                 </button>
               ) : (
                 <Link href="/signup" className="w-full text-center bg-[#3B82F6] hover:bg-blue-600 text-white py-2.5 rounded-lg text-xs font-semibold transition-colors shadow-[0_0_15px_rgba(59,130,246,0.3)]">
-                  Upgrade to Pro
+                  Get Pro 1-Year Access ($5)
                 </Link>
               )}
             </motion.div>
@@ -255,14 +262,21 @@ export default function PricingPage() {
                 POWER USER
               </div>
               <div className="space-y-4">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#A855F7]">Ultra Suite</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#A855F7]">Ultra Suite</span>
+                  <span className="px-2 py-0.5 rounded bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30 text-[9px] font-mono font-bold">1-TIME PAYMENT</span>
+                </div>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-extrabold text-white">$25</span>
-                  <span className="text-xs text-[#9CA3AF] font-mono">/mo</span>
+                  <span className="text-xs text-[#A855F7] font-mono font-bold">/ 1-year access</span>
                 </div>
-                <p className="text-xs text-[#9CA3AF]">Power user suite with autonomous AI.</p>
+                <p className="text-xs text-[#9CA3AF]">Pay once, use for a full year.</p>
                 
                 <ul className="space-y-3 pt-4 border-t border-[#1F293D] text-xs">
+                  <li className="flex items-center gap-2 text-[#F3F4F6]">
+                    <CheckCircle2 className="h-4 w-4 text-[#10B981]" />
+                    <span className="font-bold text-[#10B981]">1-Time Payment (365 Days Access)</span>
+                  </li>
                   <li className="flex items-center gap-2 text-[#F3F4F6]">
                     <CheckCircle2 className="h-4 w-4 text-[#10B981]" />
                     <span>Everything in Pro</span>
@@ -289,11 +303,11 @@ export default function PricingPage() {
                   className="w-full flex items-center justify-center gap-1.5 text-center bg-[#A855F7] hover:bg-purple-600 text-white py-2.5 rounded-lg text-xs font-semibold transition-colors shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-pointer disabled:opacity-50"
                 >
                   {upgrading === 'ultra' && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-                  <span>Go Ultra Now</span>
+                  <span>Pay $25 Once for 1 Year Ultra</span>
                 </button>
               ) : (
                 <Link href="/signup" className="w-full text-center bg-[#A855F7] hover:bg-purple-600 text-white py-2.5 rounded-lg text-xs font-semibold transition-colors shadow-[0_0_15px_rgba(168,85,247,0.3)]">
-                  Go Ultra
+                  Get Ultra 1-Year Access ($25)
                 </Link>
               )}
             </motion.div>
