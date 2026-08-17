@@ -88,13 +88,10 @@ export default function PricingPage() {
         // Redirect to official Stripe Checkout page
         window.location.href = session.checkout_url;
       } else {
-        // Fallback upgrade if Stripe key is pending configuration
-        await api.upgradePlan(plan);
-        setSuccessMsg(`Account Upgraded! You are now on the ${plan.toUpperCase()} plan.`);
-        setTimeout(() => {
-          setSuccessMsg('');
-          router.push('/dashboard');
-        }, 3000);
+        showAlert(
+          'Stripe API Key Needed',
+          'To redirect customers to official Stripe Checkout, set your STRIPE_SECRET_KEY in server .env file (e.g. STRIPE_SECRET_KEY=sk_test_...)'
+        );
       }
     } catch (e) {
       console.error(e);
